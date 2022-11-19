@@ -7,6 +7,7 @@ use App\Entity\Article;
 use Doctrine\ORM\EntityManagerInterface;
 use Faker\Factory;
 use Datetime;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use App\Repository\ArticleRepository;
 use Symfony\Component\Routing\Annotation\Route;
@@ -122,6 +123,28 @@ class ArticleController extends AbstractController
         return $this->render('article/currentArticle.html.twig', [
             'article' => $article
         ]);
+    }
+
+    // route et methode pour recuperer le vote fait en ajax
+    // appeler la classe jresponse par  use Symfony\Component\HttpFoundation\JsonResponse;
+    // cmde 1 installer//composer require friendsofsymfony/jsrouting-bundle
+    //cmdé 2//
+    //cmde 3 //php bin/console fos:js-routing:dump --format=json --target=public/js/fos_js_routes.json
+    // mettre ce code ds le controlleur   :  <<options={"expose"=true}, methods={"GET"}>>
+
+
+    /**
+     * @Route("/vote/{somme}", name="vote" )
+     */
+    public function vote($somme): JsonResponse
+    {
+        $nbreActuel = intval($somme);
+
+        if(is_numeric($nbreActuel)){
+            $nbreActuel = $nbreActuel + 1 ;
+        }
+
+        return $this->json(['ajout' => $nbreActuel]);
     }
 
 
