@@ -1,0 +1,1 @@
+{"base_url":"","routes":{"vote":{"tokens":[["variable","\/","[^\/]++","somme",true],["text","\/vote"]],"defaults":[],"requirements":[],"hosttokens":[],"methods":["GET"],"schemes":[]}},"prefix":"","host":"localhost","port":"","scheme":"http","locale":""}
