@@ -117,10 +117,10 @@ class ArticleController extends AbstractController
         $repository = $entityManager->getRepository(Article::class);
 
         $article =  $repository->find($id);
-        self::print_q($article);
+        //self::print_q($article);
 
         return $this->render('article/currentArticle.html.twig', [
-            'articles' => $article
+            'article' => $article
         ]);
     }
 

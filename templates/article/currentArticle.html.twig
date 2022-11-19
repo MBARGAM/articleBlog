@@ -1,7 +1,28 @@
 {% extends 'base.html.twig' %}
-{% block title%}{% endblock %}
+{% block title%}{{ article.title }}{% endblock %}
 
 {% block body%}
+    {% set dateCreation = article.dateCreation|date("d-m-Y") %}
 
+    <div class="mb-5 text-center ">
+        <h1>Article N°{{ article.id }}</h1>
+    </div>
+
+    <table class="table w-25 border border-dark mx-auto">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col"><span class="font-weight-bold">Nom de l'article </span> =>  {{ article.title|upper }}</th>
+            </tr>
+        </thead>
+        <tbody class="bg-white">
+            <tr>
+                <td class="border border-dark collapsed"><span class="font-weight-bold">Description </span> : {{ article.description}}</td>
+            </tr>
+            <tr>
+                <td class="border border-dark collapsed"><span class="font-weight-bold">Date de création </span> : {{ dateCreation }}</td>
+            </tr>
+        </tbody>
+
+    </table>
 
 {% endblock %}
