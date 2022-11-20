@@ -19,13 +19,33 @@
         <ul >
             <li class="navbar-brand"><a href="{{ path('accueil') }}" title="accueil" class="text-white" >Accueil</a></li>
             <li class="navbar-brand"> <a href="{{ path('articles') }}" title="Article" class="text-white" >Articles</a> </li>
-            <li class="navbar-brand"><a href="#" title="Contact" class="text-white" >Contact</a></li>
+            <li class="navbar-brand"><a href="{{ path('magicArticle',{word:'magique'}) }}" title="Contact" class="text-white">Liste magique</a></li>
+            {% if listeAnnee is defined %}
+                <li class="navbar-brand liNav">
+                    <a href="#" class="menu navbar-brand">Année de creation des articles</a>
+                    <ul class="ulNavList list-group">
+                        {% for anneeBlock in listeAnnee %}
+                            <span class="d-block  bg-dark p-2">
+                            {% for annee in anneeBlock %}
+                                <li class="navbar-brand "><a class="aNav text-white" href="{{ path('anneeArticle',{annee :annee.annee })}}" >{{ annee.annee }}</a></li>
+                            {% endfor %}
+                        </span>
+
+
+                        {% endfor %}
+
+
+                    </ul>
+                </li>
+            {% endif %}
+
         </ul>
     </nav>
+
 </header>
 
 {% block body %}
-    <h1>{{ message }}</h1>
+
 {% endblock %}
 
 

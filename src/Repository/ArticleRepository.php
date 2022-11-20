@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Article;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use DoctrineExtensions\Query\Mysql\Year;
 
 /**
  * @extends ServiceEntityRepository<Article>
@@ -39,6 +40,64 @@ class ArticleRepository extends ServiceEntityRepository
         }
     }
 
+    /* requete preparee
+    & 1-  a represente une alias qui est la table
+       2- c est la condition
+      3- les parametre dela conditions y sont definies
+      4- les 2 dernieres fonctions servent a l execution des requetes
+    */
+    public function findByWord($value): array
+    {
+        return $this->createQueryBuilder('a')
+            ->Where('a.description LIKE  :val ')
+            ->setParameter('val', "%".$value."%")
+            ->orderBy('a.title', 'ASC')
+           ->getQuery()
+           ->getResult()
+      ;
+   }
+
+    /* requete preparee
+    & 1-  a represente une alias qui est la table
+       2- c est la condition
+      3- les parametre dela conditions y sont definies
+      4- les 2 dernieres fonctions servent a l execution des requetes
+    */
+
+    public function findByDate($value): array
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = '
+            SELECT * FROM Article a
+            WHERE YEAR(a.date_creation) = '.$value.'
+            ORDER BY a.title ASC
+            ';
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery();
+
+        // returns an array of arrays (i.e. a raw data set)
+        return $resultSet->fetchAllAssociative();
+    }
+
+   /* function permettant de recuperer les années de creation de la table article*/
+
+    public function findYearlist(): array
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = '
+            SELECT DISTINCT(YEAR(`date_creation`)) AS annee FROM Article a
+            ORDER BY annee ASC
+            ';
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery();
+
+        // returns an array of arrays (i.e. a raw data set)
+        return $resultSet->fetchAllAssociative();
+    }
+
+//SELECT DISTINCT(YEAR(`date_creation`)) AS annee FROM `article` ORDER BY annee
 //    /**
 //     * @return Article[] Returns an array of Article objects
 //     */

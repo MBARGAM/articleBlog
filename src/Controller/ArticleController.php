@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Entity\Article;
+use App\Controller\HomeController;
 use Doctrine\ORM\EntityManagerInterface;
 use Faker\Factory;
 use Datetime;
@@ -38,7 +39,7 @@ class ArticleController extends AbstractController
 
          $faker = Factory::create();
          $title = $faker->word(); // generation d'un titre
-         $description = $faker->text()." magique"; // generation d'un text
+         $description = $faker->text(); // generation d'un text
          $dateCreation = self::createDate(); // generation d'une dateCreation
          $article = new Article();
          $article->setTitle($title); // mise a jour du titre
@@ -48,16 +49,6 @@ class ArticleController extends AbstractController
      }
 
 
-    /* route menant a un article */
-    /**
-     * @Route("/accueil", name="accueil")
-     */
-    public function index(): Response
-    {
-        return $this->render('article/index.html.twig', [
-            'controller_name' => 'ArticleController',
-        ]);
-    }
 
     /* creation et insertion d'un article dans la base de donneroute ménant a un message reussite
       &- creation de function avec  public function insertDate(EntityManagerInterface $entityManager)
@@ -70,13 +61,13 @@ class ArticleController extends AbstractController
      * @Route("/accueil", name="accueil")
      */
 
-    public function insertDate(EntityManagerInterface $entityManager){
+    public function insertArticle(EntityManagerInterface $entityManager){
 
         $article = self::createArticle();
         $entityManager->persist($article);
         $entityManager->flush();
-        return $this->render('article/index.html.twig',
-            ["message" => "insertion reussie "]
+        return $this->render('home/index.html.twig',
+            ["message" => "insertion reussie"]
         );
 
     }
@@ -125,27 +116,51 @@ class ArticleController extends AbstractController
         ]);
     }
 
-    // route et methode pour recuperer le vote fait en ajax
-    // appeler la classe jresponse par  use Symfony\Component\HttpFoundation\JsonResponse;
-    // cmde 1 installer//composer require friendsofsymfony/jsrouting-bundle
-    //cmdé 2//
-    //cmde 3 //php bin/console fos:js-routing:dump --format=json --target=public/js/fos_js_routes.json
-    // mettre ce code ds le controlleur   :  <<options={"expose"=true}, methods={"GET"}>>
 
+    /* route menant a un article precis */
+    /* selection d un article
+     1- public function article(EntityManagerInterface $entityManager): Response
+    2- reception de l id via le lien de la page twig transmis a la route du nom name
+     2-  $nom du repository = $entityManager->getRepository(nom de l entite::class);
+     3 - resultat de l article par appel de la fonction la methode sql cree ou une requete préparée ici find($id) */
 
     /**
-     * @Route("/vote/{somme}", name="vote" )
+     * @Route("/word/{word}", name="magicArticle")
      */
-    public function vote($somme): JsonResponse
+    public function magicArticle($word,EntityManagerInterface $entityManager): Response
     {
-        $nbreActuel = intval($somme);
+        $repository = $entityManager->getRepository(Article::class); //
 
-        if(is_numeric($nbreActuel)){
-            $nbreActuel = $nbreActuel + 1 ;
-        }
+        $listArticle =  $repository->findByWord($word);
+        $article = array_chunk($listArticle,4,false);
+       // self::print_q($article);
 
-        return $this->json(['ajout' => $nbreActuel]);
+        return $this->render('article/magicArticle.html.twig', [
+            'articles' => $article
+        ]);
     }
+
+
+    /* route pour gestion des dates de creation*/
+    /**
+     * @Route("/annee/{annee}", name="anneeArticle")
+     */
+    public function anneeArticle($annee,EntityManagerInterface $entityManager): Response
+    {
+        $repository = $entityManager->getRepository(Article::class); //
+
+        $listArticle =  $repository->findByDate($annee);
+        $article = array_chunk($listArticle,4,false);
+         //self::print_q($article);
+
+        return $this->render('article/magicArticle.html.twig', [
+            'articles' => $article
+        ]);
+    }
+
+
+
+
 
 
 }

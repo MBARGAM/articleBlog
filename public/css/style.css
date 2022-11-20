@@ -9,6 +9,9 @@ body{
 a {
     text-decoration: none;
 }
+UL{
+
+}
 #footer{
     position: fixed;
     bottom: 0;
@@ -22,4 +25,17 @@ a {
 #article{
     width :18rem;
     height: 18rem;
+}
+
+.ulNavList{
+    display: none;
+    position: absolute;/* la position absolu permet de fixer les menu quand on fais du*/
+    left:23rem;
+    padding :0;
+    top:3rem;
+
+}
+
+.liNav:hover ul{
+    display: block;
 }
