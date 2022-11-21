@@ -45,6 +45,7 @@ class ArticleController extends AbstractController
          $article->setTitle($title); // mise a jour du titre
          $article->setDescription($description);// mise a jour de la description
          $article->setDateCreation($dateCreation);// mise a jour de la date de creation
+         $article->setPrice( $faker->numberBetween(5,100));// mise a jour de la date de creation
          return $article;
      }
 
@@ -58,7 +59,7 @@ class ArticleController extends AbstractController
     */
 
     /**
-     * @Route("/accueil", name="accueil")
+     * @Route("/addArticle", name="addArticle")
      */
 
     public function insertArticle(EntityManagerInterface $entityManager){
@@ -67,7 +68,7 @@ class ArticleController extends AbstractController
         $entityManager->persist($article);
         $entityManager->flush();
         return $this->render('home/index.html.twig',
-            ["message" => "insertion reussie"]
+            ["message" => "création de l'article  et insertion reussie"]
         );
 
     }
@@ -101,15 +102,20 @@ class ArticleController extends AbstractController
      2-  $nom du repository = $entityManager->getRepository(nom de l entite::class);
      3 - resultat de l article par appel de la fonction la methode sql find ou une requete préparée ici find($id) */
 
+
+    /* dans le cas le cas des requestes automatique avec parametre vers une routes , on ne declare pas l entity manager
+       et on on utilise SensioFrameworkExtraBundle et on installe avec la commande : composer require sensio/framework-extra-bundle
+     en paramete on met la CLASSE en parametre */
+
     /**
      * @Route("/article/{id}", name="currentArticle")
      */
-    public function currentArticle($id,EntityManagerInterface $entityManager): Response
+    public function currentArticle(Article $article): Response
     {
-        $repository = $entityManager->getRepository(Article::class);
-
-        $article =  $repository->find($id);
-        //self::print_q($article);
+        //$id,EntityManagerInterface $entityManager
+       // $repository = $entityManager->getRepository(Article::class);
+      //  $article =  $repository->find($id);
+        self::print_q($article);
 
         return $this->render('article/currentArticle.html.twig', [
             'article' => $article

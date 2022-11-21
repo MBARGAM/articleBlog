@@ -3,5 +3,11 @@
 {% block title %}Bienvenue dans votre blog{% endblock %}
 
 {% block body %}
+    <div class="mt-5 ml-5  w-25">
+        {% if message is defined %}
+           <span class="d-block text-success"> {{ message }}</span>
+        {% endif %}
+        <button type="button" class="btn btn-outline-dark p-3 my-5 mx-auto bg-secondary"><a class="text-white" href="{{ path("addArticle") }}">Ajouter un nouvel article</a></button>
 
-{% endblock %}
+    </div>
+   {% endblock %}
