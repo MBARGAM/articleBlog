@@ -42,6 +42,11 @@ class Article
      */
     private $vote = 0;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $dislike = 0;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -105,5 +110,36 @@ class Article
         $this->vote = $vote;
 
         return $this;
+    }
+
+
+    public function getDislike(): ?int
+    {
+        return $this->dislike;
+    }
+
+    public function setDislike(int $dislike): self
+    {
+        $this->dislike = $dislike;
+
+        return $this;
+    }
+
+
+    /*function permettant d afficher les votes dans le twig a partr d une fonction on l ecrit ex :{{ article.getVoteString sans accolade}}*/
+  //fonction des likes
+    public function voteLike()
+    {
+        $vote = $this->getVote();
+
+        return $vote;
+    }
+
+    //fonction des likes
+    public function voteDislike()
+    {
+        $vote = $this->getDislike();
+
+        return $vote;
     }
 }

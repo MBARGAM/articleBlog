@@ -24,16 +24,29 @@
         </tbody>
 
     </table>
+    <span class="d-block text-center mx-auto">Vote</span>
+    <div class="table w-25  mx-auto d-flex justify-content-around mt-3">
 
-    <div
-            id="vote" class="text-center pt-5 mt-5">
-        <h5  class="d-block text-dark  w-25 mb-1 mx-auto font-weight-bold" >Vote</h5>
-        <span id="countLike" class="btn btn-secondary" >0</span>
-        <span id="like" class="btn btn-dark" >Like</span>
-        <button id="add" class="btn btn-dark" type="button">+</button>
-        <button id="remove"  class="btn btn-dark" type="button">-</button>
-        <span  id="dislike" class="btn btn-dark" >dislike</span>
-        <span id="countDislike" class="btn btn-secondary" >0</span>
+        <div>
+            <span class="d-inline-block ">{{ article.voteLike }} </span>
+            <form action="{{ path('vote',{ id: article.id }) }}"  method="POST" class="d-inline-block">
+                <button type="submit"  name="action" value="add" class="btn btn-dark rounded">+</button>
+            </form>
+        </div>
+
+        <div>
+            <form action="{{ path('vote',{ id: article.id }) }}"  method="POST" class="d-inline-block">
+                <button type="submit" name="action" value="remove" class="btn btn-dark rounded">-</button>
+            </form>
+            <span class="d-inline-block">{{ article.voteDislike }} </span>
+        </div>
+
+
     </div>
+{#
+    1-creation d une div
+    2- creation d un formulaire et d un bouton de type submit ayant name et une value
+    3- l action est une redirection vers une route
+#}
 
 {% endblock %}

@@ -9,6 +9,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Faker\Factory;
 use Datetime;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use App\Repository\ArticleRepository;
 use Symfony\Component\Routing\Annotation\Route;
@@ -115,7 +116,7 @@ class ArticleController extends AbstractController
         //$id,EntityManagerInterface $entityManager
        // $repository = $entityManager->getRepository(Article::class);
       //  $article =  $repository->find($id);
-        self::print_q($article);
+        //self::print_q($article);
 
         return $this->render('article/currentArticle.html.twig', [
             'article' => $article
@@ -164,8 +165,28 @@ class ArticleController extends AbstractController
         ]);
     }
 
+    /* function update
+     1- en parametre , l id l objet et l entity manager
+     2- recuperation de l objet via le repository
+     3- changement du vote et flush dans la bd sans le persist car l objet est reconnu par doctrine
+    */
+
+    /**
+     * @Route("/vote/{id}", name="vote", methods="POST")
+     */
+
+    public function vote(Article $article,Request $request ,EntityManagerInterface $entityManager): Response
+    {
+
+        dd($article, $request->request->all());
 
 
+     //  $repository= $entityManager->getRepository(Article::class);
+
+        return $this->render('article/currentArticle.html.twig', [
+            'articles' => "moi"
+        ]);
+    }
 
 
 
