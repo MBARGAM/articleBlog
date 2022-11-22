@@ -56,6 +56,15 @@ class ArticleRepository extends ServiceEntityRepository
            ->getResult()
       ;
    }
+    public function findById($value): array
+    {
+        return $this->createQueryBuilder('a')
+            ->Where('a.id =:val ')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
 
     /* requete preparee
     & 1-  a represente une alias qui est la table

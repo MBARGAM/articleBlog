@@ -171,20 +171,35 @@ class ArticleController extends AbstractController
      3- changement du vote et flush dans la bd sans le persist car l objet est reconnu par doctrine
     */
 
+
+
     /**
      * @Route("/vote/{id}", name="vote", methods="POST")
      */
 
-    public function vote(Article $article,Request $request ,EntityManagerInterface $entityManager): Response
+    public function vote($id,Article $article,Request $request ,EntityManagerInterface $entityManager): Response
     {
+        /*self::print_q( $action);
+         $repository= $entityManager->getRepository(Article::class);  // declaration de la valeur pour le requete select
+         $dataArticle =  $repository->findById($id);  // execution de la requete et recuperation de la valeur de l article concernée
+        $dataArticle = $dataArticle[0];   // récupération de la valeur de la clé afin d'obtenir l'objet*/
 
-        dd($article, $request->request->all());
 
+        $action = $request->request->all(); // recuperation de la valeur de l'action qui est un tableau
+         $action = $action["action"];  // recuperation de la valeur de la cle
 
-     //  $repository= $entityManager->getRepository(Article::class);
+        // condition tertiaire afin d ajouter un vote negatif or positif
+         $action === "add" ?  $article->setVote( $article->getVote()+1) : $article->setDislike($article->getDislike()+1);
+
+        //ici
+       // $action === "add" ?  $dataArticle->setVote( $dataArticle->getVote()+1) : $dataArticle->setDislike($dataArticle->getDislike()+1);
+
+       $entityManager->flush();
+
+        //self::print_q($article);
 
         return $this->render('article/currentArticle.html.twig', [
-            'articles' => "moi"
+            'article' => $article
         ]);
     }
 

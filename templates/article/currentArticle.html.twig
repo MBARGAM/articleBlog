@@ -29,6 +29,9 @@
 
         <div>
             <span class="d-inline-block ">{{ article.voteLike }} </span>
+            <span class="d-inline-block">
+                {{  article.voteLike > 1 ? ' Likes ' :' Like'}}
+            </span>
             <form action="{{ path('vote',{ id: article.id }) }}"  method="POST" class="d-inline-block">
                 <button type="submit"  name="action" value="add" class="btn btn-dark rounded">+</button>
             </form>
@@ -38,7 +41,10 @@
             <form action="{{ path('vote',{ id: article.id }) }}"  method="POST" class="d-inline-block">
                 <button type="submit" name="action" value="remove" class="btn btn-dark rounded">-</button>
             </form>
-            <span class="d-inline-block">{{ article.voteDislike }} </span>
+            <span class="d-inline-block">{{ article.voteDislike }}  </span>
+            <span class="d-inline-block">
+                {{  article.voteDislike > 1 ? ' disikes ' :' disike'}}
+            </span>
         </div>
 
 
