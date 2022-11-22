@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use Psr\Container\ContainerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Entity\Article;
 use App\Controller\HomeController;
@@ -172,7 +173,6 @@ class ArticleController extends AbstractController
     */
 
 
-
     /**
      * @Route("/vote/{id}", name="vote", methods="POST")
      */
@@ -182,7 +182,10 @@ class ArticleController extends AbstractController
         /*self::print_q( $action);
          $repository= $entityManager->getRepository(Article::class);  // declaration de la valeur pour le requete select
          $dataArticle =  $repository->findById($id);  // execution de la requete et recuperation de la valeur de l article concernée
-        $dataArticle = $dataArticle[0];   // récupération de la valeur de la clé afin d'obtenir l'objet*/
+        $dataArticle = $dataArticle[0];   // récupération de la valeur de la clé afin d'obtenir l'objet
+        //ici
+       // $action === "add" ?  $dataArticle->setVote( $dataArticle->getVote()+1) : $dataArticle->setDislike($dataArticle->getDislike()+1);
+       */
 
 
         $action = $request->request->all(); // recuperation de la valeur de l'action qui est un tableau
@@ -191,17 +194,14 @@ class ArticleController extends AbstractController
         // condition tertiaire afin d ajouter un vote negatif or positif
          $action === "add" ?  $article->setVote( $article->getVote()+1) : $article->setDislike($article->getDislike()+1);
 
-        //ici
-       // $action === "add" ?  $dataArticle->setVote( $dataArticle->getVote()+1) : $dataArticle->setDislike($dataArticle->getDislike()+1);
-
        $entityManager->flush();
 
         //self::print_q($article);
 
-        return $this->render('article/currentArticle.html.twig', [
-            'article' => $article
+        return $this->redirectToRoute('currentArticle', [
+            'id' => $article->getId()
         ]);
-    }
+    }// redirection vers le nom de la route qui affiche ca
 
 
 
