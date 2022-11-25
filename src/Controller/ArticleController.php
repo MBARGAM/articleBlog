@@ -98,7 +98,7 @@ class ArticleController extends AbstractController
 
         $listArticle =  $repository->findAll();
          $article = array_chunk($listArticle,4,false);
-        //self::print_q($article);
+        //dd($article);
 
         return $this->render('article/articles.html.twig', [
             'articles' => $article

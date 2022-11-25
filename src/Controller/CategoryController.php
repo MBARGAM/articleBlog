@@ -44,6 +44,6 @@ class CategoryController extends AbstractController
             'msg' => 'Catégorie crée avec succès '
         ]);
     }
-    
+
 
 }

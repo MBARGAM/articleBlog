@@ -21,8 +21,13 @@
                             <a href="{{ path('currentArticle',{ id : article.id }) }}" class="text-decoration-none"><h3 class="text-white ">{{ article.title|capitalize }} </h3></a>
                         </div>
                         <div >
+                            <a href="{{ path('currentArticle',{ id : article.id }) }}" class="text-decoration-none "><h6 class="text-dark ">{{ article. currentCategory|upper }} </h6></a>
+                        </div>
+
+                        <div >
                             <button type="button"  class="btn rounded">€{{ article.price }}</button>
                         </div>
+
 
                     </div>
                 {% endfor %}

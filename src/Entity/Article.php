@@ -160,4 +160,10 @@ class Article
 
         return $this;
     }
+    public function currentCategory()
+    {
+    $vote = $this->getCategory()->getName();
+
+        return $vote;
+    }
 }
