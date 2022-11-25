@@ -37,6 +37,7 @@ class Category
     public function __construct()
     {
         $this->article = new ArrayCollection();
+        $this->dateCreation = new \DateTime();
     }
 
     public function getId(): ?int

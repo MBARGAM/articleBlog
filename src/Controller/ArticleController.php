@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Category;
 use Psr\Container\ContainerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Entity\Article;
@@ -66,7 +67,13 @@ class ArticleController extends AbstractController
 
     public function insertArticle(EntityManagerInterface $entityManager){
 
+        $repository = $entityManager->getRepository(Category::class);
+        $listCategory =  $repository->findAll();
+       $choix =  array_rand($listCategory); // choix d une cle de la table
+       $choix = $listCategory[$choix];  // recuperation de la valeur de l indice choisi
+
         $article = self::createArticle();
+        $article->setCategory($choix); // mise a jour du choix de la categorie sachant que la categorie_id recois un objet de type categorie
         $entityManager->persist($article);
         $entityManager->flush();
         return $this->render('home/index.html.twig',
@@ -86,6 +93,7 @@ class ArticleController extends AbstractController
      */
     public function article(EntityManagerInterface $entityManager): Response
     {
+
         $repository = $entityManager->getRepository(Article::class);
 
         $listArticle =  $repository->findAll();

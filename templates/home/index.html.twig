@@ -10,4 +10,11 @@
         <button type="button" class="btn btn-outline-dark p-3 my-5 mx-auto bg-secondary"><a class="text-white" href="{{ path("addArticle") }}">Ajouter un nouvel article</a></button>
 
     </div>
+    <div class="mt-5 ml-5  w-25">
+        {% if msg is defined %}
+            <span class="d-block text-success"> {{ msg }}</span>
+        {% endif %}
+        <button type="button" class="btn btn-outline-dark p-3 my-5 mx-auto bg-secondary"><a class="text-white" href="{{ path("category") }}">Ajouter d'une categorie</a></button>
+
+    </div>
    {% endblock %}
