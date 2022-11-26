@@ -30,7 +30,7 @@ UL{
 .ulNavList{
     display: none;
     position: absolute;/* la position absolu permet de fixer les menu quand on fais du*/
-    left:23rem;
+    left:31rem;
     padding :0;
     top:3rem;
 
@@ -38,4 +38,11 @@ UL{
 
 .liNav:hover ul{
     display: block;
+}
+.ulNavListCateg{
+    display: none;
+    position: absolute;/* la position absolu permet de fixer les menu quand on fais du*/
+    left:23.5rem;
+    padding :0;
+    top:3rem;
 }

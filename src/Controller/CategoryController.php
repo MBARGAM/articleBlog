@@ -46,4 +46,18 @@ class CategoryController extends AbstractController
     }
 
 
+    /**
+     * @Route("/currentCategory/{category}", name="currentCategory")
+     */
+    public function currentCategory($category,EntityManagerInterface $entityManager): Response
+    {
+        $repository = $entityManager->getRepository(Article::class);
+        $listCategory =  $repository->findByCategory($category);
+       // dd( $listCategory );
+        $article = array_chunk($listCategory ,4,false);
+
+        return $this->render('article/articles.html.twig', [
+            'articles' => $article
+        ]);
+    }
 }

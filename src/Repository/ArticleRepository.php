@@ -79,6 +79,7 @@ class ArticleRepository extends ServiceEntityRepository
 
         $sql = '
             SELECT * FROM Article a
+            INNER JOIN Category on a.category_id = Category.id
             WHERE YEAR(a.date_creation) = '.$value.'
             ORDER BY a.title ASC
             ';
@@ -105,6 +106,19 @@ class ArticleRepository extends ServiceEntityRepository
         // returns an array of arrays (i.e. a raw data set)
         return $resultSet->fetchAllAssociative();
     }
+
+    // recherche des articles par categorie
+    public function findByCategory($value): array
+    {
+        return $this->createQueryBuilder('a')
+            ->Where('a.category =:val ')
+            ->setParameter('val', $value)
+            ->orderBy('a.title')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
 
 //SELECT DISTINCT(YEAR(`date_creation`)) AS annee FROM `article` ORDER BY annee
 //    /**

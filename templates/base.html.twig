@@ -16,10 +16,21 @@
 
 <header>
     <nav id="nav" class="navbar navbar-dark bg-dark mb-3">
-        <ul >
+        <ul>
             <li class="navbar-brand"><a href="{{ path('accueil') }}" title="accueil" class="text-white" >Accueil</a></li>
             <li class="navbar-brand"> <a href="{{ path('articles') }}" title="Article" class="text-white" >Articles</a> </li>
             <li class="navbar-brand"><a href="{{ path('magicArticle',{word:'magique'}) }}" title="Contact" class="text-white">Liste magique</a></li>
+            {% if categoryList is defined %}
+                 <li class="navbar-brand liNav">
+                    <a href="#" class="menu navbar-brand">Categorie</a>
+                        <ul class="ulNavListCateg list-group">
+                            {% for category in categoryList  %}
+                                <li class="navbar-brand d-block bg-dark px-2"><a class="aNav text-white" href="{{ path('currentCategory',{category : category.id})}}" >{{ category.name|capitalize}}</a></li>
+                            {% endfor %}
+
+                        </ul>
+                </li>
+            {% endif %}
             {% if listeAnnee is defined %}
                 <li class="navbar-brand liNav">
                     <a href="#" class="menu navbar-brand">Année de creation des articles</a>
@@ -31,10 +42,7 @@
                             {% endfor %}
                         </span>
 
-
                         {% endfor %}
-
-
                     </ul>
                 </li>
             {% endif %}

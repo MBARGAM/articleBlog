@@ -149,7 +149,7 @@ class ArticleController extends AbstractController
 
         $listArticle =  $repository->findByWord($word);
         $article = array_chunk($listArticle,4,false);
-       // self::print_q($article);
+       ///dd($article);
 
         return $this->render('article/magicArticle.html.twig', [
             'articles' => $article
@@ -167,7 +167,7 @@ class ArticleController extends AbstractController
 
         $listArticle =  $repository->findByDate($annee);
         $article = array_chunk($listArticle,4,false);
-         //self::print_q($article);
+         //dd($article);
 
         return $this->render('article/magicArticle.html.twig', [
             'articles' => $article

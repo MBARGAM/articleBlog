@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Article;
+use App\Entity\Category;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -28,10 +29,15 @@ class HomeController extends AbstractController
         $listeAnnee =  $repository->findYearlist();
         $listeAnnee = array_chunk($listeAnnee,4,false);
 
-       // self::print_q($listeAnnee);
+        $repository = $entityManager->getRepository(Category::class);
+        $categoryList=  $repository->findAllSort();
+
+       //self::print_q($listeAnnee);
+       //dd($categoryList);
 
         return $this->render('home/index.html.twig', [
-            'listeAnnee' => $listeAnnee
+            'listeAnnee' => $listeAnnee,
+            'categoryList' => $categoryList
         ]);
     }
 
