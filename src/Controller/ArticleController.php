@@ -245,7 +245,8 @@ class ArticleController extends AbstractController
             return $this->render('home/index.html.twig', [
                 'message2' => " article inséré avec succès",
                 'listeAnnee' => $listeAnnee,
-                'categoryList' => $categoryList
+                'categoryList' => $categoryList,
+
 
             ]);
         }
@@ -254,6 +255,7 @@ class ArticleController extends AbstractController
 pour cela */
         return $this->renderForm('article/articleForm.html.twig', [
             'category'=> $categoryList,
+            'titre'=>'Completer le formulaire pour ajouter un article',
             'form' => $form
         ]);
     }

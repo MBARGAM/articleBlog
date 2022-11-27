@@ -4,10 +4,11 @@ namespace App\Controller;
 
 use App\Entity\Article;
 use App\Entity\Category;
+use App\Form\CategoryType;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Faker\Factory;
 
@@ -60,4 +61,46 @@ class CategoryController extends AbstractController
             'articles' => $article
         ]);
     }
+
+    /**
+     * @Route("/categoryRegister" ,name="categoryRegister")
+     */
+
+
+
+    public function categoryRegister(Request $request,EntityManagerInterface $entityManager){
+
+        $repository = $entityManager->getRepository(Article::class);
+        $listeAnnee =  $repository->findYearlist();
+        $listeAnnee = array_chunk($listeAnnee,4,false);
+
+        $repository = $entityManager->getRepository(Category::class);
+        $categoryList=  $repository->findAllSort();
+
+        $category = new Category();
+        $form = $this->createForm(CategoryType::class);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+            $dataCategory = $form->getData();
+
+            $entityManager->persist($dataCategory);
+            $entityManager->flush();
+
+            return $this->render('home/index.html.twig',[
+                   'message3'=>'categorie inseree avec succès',
+
+                ]
+
+            );
+        }
+
+        return $this->renderForm('article/articleForm.html.twig',[
+            'titre'=>'Completer le formulaire pour ajouter un article',
+            'form' => $form ]);
+    }
 }
+
+
+
+
