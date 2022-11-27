@@ -12,6 +12,7 @@ a {
 UL{
 
 }
+
 #footer{
     position: fixed;
     bottom: 0;
@@ -22,10 +23,12 @@ UL{
     top: 0;
     width: 100%;
 }
-#article{
+
+#articleItem{
     width :15rem;
     height: 15rem;
 }
+
 
 .ulNavList{
     display: none;

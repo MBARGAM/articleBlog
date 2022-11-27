@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+
+{% block body %}
+    <h2 class="text-center my-5"> Completer le formulaire</h2>
+    <div class="w-50 mx-auto ">
+        {{ form(form) }}
+    </div>
+
+{% endblock %}

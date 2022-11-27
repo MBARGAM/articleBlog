@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Category;
+use App\Form\ArticleType;
 use Psr\Container\ContainerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Entity\Article;
@@ -212,5 +213,48 @@ class ArticleController extends AbstractController
     }// redirection vers le nom de la route qui affiche ca
 
 
+    /**
+     * @Route("/articleRegister", name="articleRegister")
+     */
+    public function addArticle(Request $request,EntityManagerInterface $entityManager): Response
+    {
+        // pour le creation du select je selectionne la liste de produit de la bd
+        $repository = $entityManager->getRepository(Category::class);
+        $categoryList=  $repository->findAllSort();
 
+        $repository = $entityManager->getRepository(Article::class);
+        $listeAnnee =  $repository->findYearlist();
+        $listeAnnee = array_chunk($listeAnnee,4,false);
+
+       // dd($categoryList);
+        $article = new Article(); //creation d un nouvel article
+
+        $form = $this->createForm(ArticleType::class,$article); //creation du formulaire vide ou pre rempli
+        $form->handleRequest($request); // recuperation de la valeur du formulaire
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            // $form->getData() holds the submitted values
+           $listData = $form->getData();
+          //dd($listData);
+
+
+            // ... perform some action, such as saving the task to the database
+            $entityManager->persist($listData);
+            $entityManager->flush();
+
+            return $this->render('home/index.html.twig', [
+                'message2' => " article inséré avec succès",
+                'listeAnnee' => $listeAnnee,
+                'categoryList' => $categoryList
+
+            ]);
+        }
+/* pour le select , on fait une recherche dans la bd ensuite on l envoi dans l entite car doctrine a cette donnee
+ et dans le type utilisé est le type entité et pour ecrire les variable on ne sais pas envoyer un objet donc on cree une fonction
+pour cela */
+        return $this->renderForm('article/articleForm.html.twig', [
+            'category'=> $categoryList,
+            'form' => $form
+        ]);
+    }
 }

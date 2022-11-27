@@ -7,12 +7,24 @@
         {% if message is defined %}
            <span class="d-block text-success"> {{ message }}</span>
         {% endif %}
-        <button type="button" class="btn btn-outline-dark p-3 my-5 mx-auto bg-secondary"><a class="text-white" href="{{ path("addArticle") }}">Ajouter un nouvel article</a></button>
+        <button type="button" class="btn btn-outline-dark p-3 mx-auto bg-secondary"><a class="text-white" href="{{ path("addArticle") }}">Ajouter un nouvel article</a></button>
     </div>
     <div class="mt-5 ml-5  w-25">
         {% if msg is defined %}
             <span class="d-block text-success"> {{ msg }}</span>
         {% endif %}
-        <button type="button" class="btn btn-outline-dark p-3 my-5 mx-auto bg-secondary"><a class="text-white" href="{{ path("category") }}">Ajouter d'une categorie</a></button>
+        <button type="button" class="btn btn-outline-dark p-3 mx-auto bg-secondary"><a class="text-white" href="{{ path("category") }}">Ajouter d'une categorie</a></button>
+    </div>
+    <div class="mt-5 ml-5  w-25">
+        {% if message2 is defined %}
+            <span class="d-block text-success"> {{ message2 }}</span>
+        {% endif %}
+        <button type="button" class="btn btn-outline-dark p-3  mx-auto bg-secondary"><a class="text-white" href="{{ path("articleRegister") }}">Ajouter un article via le formulaire</a></button>
+    </div>
+    <div class="mt-5 ml-5  w-25">
+        {% if message3 is defined %}
+            <span class="d-block text-success"> {{ message3 }}</span>
+        {% endif %}
+        <button type="button" class="btn btn-outline-dark p-3  mx-auto bg-secondary"><a class="text-white" href="{{ path("categoryRegister") }}">Ajouter un nouvelle categorie via le formulaire</a></button>
     </div>
 {% endblock %}
