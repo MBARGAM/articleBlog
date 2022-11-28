@@ -259,4 +259,56 @@ pour cela */
             'form' => $form
         ]);
     }
+
+
+    //modification de l article
+    /**
+     * @Route("/modifyArticle/{id}" , name="modifyArticle")
+     */
+
+    public function modifierArticle($id,Request $request,EntityManagerInterface $entityManager):Response
+    {
+
+        // recuperation des données de l'id
+
+        $reqChoix= $entityManager->getRepository(Article::class);
+        $currentArticle = $reqChoix->find($id);
+        
+        // recuperation des annees
+        $listeAnnee =  $reqChoix->findYearlist();
+        $listeAnnee = array_chunk($listeAnnee,4,false);
+
+        //recuperation de la liste des categories
+        $listCategory = $entityManager->getRepository(Category::class);
+        $categoryList=  $listCategory->findAllSort();
+       // $article = new Article();
+
+       // je cree une formulaire avec les donnees
+        $form = $this->createForm(ArticleType::class,$currentArticle);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+
+            // recuperer les donnees
+            $data = $form->getData();
+             $entityManager->flush();
+
+            //dd($listeAnnee);
+             return $this->render('home/index.html.twig',
+             [
+                 'message2' => " modification reussie",
+                 'listeAnnee' => $listeAnnee,
+                 'categoryList' => $categoryList,
+             ]);
+
+        }
+
+        return $this->renderForm('article/articleForm.html.twig',
+            [
+                'category'=> $categoryList,
+                'titre'=>'Completer le formulaire pour ajouter un article',
+                'form' => $form
+           ]);
+
+    }
 }

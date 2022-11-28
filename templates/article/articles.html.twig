@@ -27,6 +27,9 @@
                         <div >
                             <button type="button"  class="btn rounded">€{{ article.price }}</button>
                         </div>
+                        <div>
+                            <a href="{{ path('modifyArticle',{ id : article.id})}}" class="btn btn-primary">Modifier</a>
+                        </div>
 
 
                     </div>
