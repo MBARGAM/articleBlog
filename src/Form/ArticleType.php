@@ -37,9 +37,7 @@ class ArticleType extends AbstractType
             ->add('description',TextareaType::class,[
                 'label'=>'Description',
                 'required'=> true,
-                'attr'=>[
-                          'placeholder'=> ' Description'
-                       ]
+               
             ])
             ->add('price',MoneyType::class,[
                         'label'=>'Prix' ,
